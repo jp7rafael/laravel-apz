@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::resource('articles', 'ArticlesController');
 Route::resource('authors', 'AuthorsController');
 Route::resource('articles.recommendations', 'RecommendationsController', ['only' => ['create', 'store']]);
+
+Route::post('queue/receive', function () {
+    return Queue::marshal();
+});
