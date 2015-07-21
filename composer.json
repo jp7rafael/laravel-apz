@@ -11,7 +11,8 @@
         "predis/predis": "~1.0",
         "greggilbert/recaptcha": "~2.0",
         "doctrine/dbal": "~2.5",
-        "codeclimate/php-test-reporter": "0.1.*"
+        "codeclimate/php-test-reporter": "0.1.*",
+        "aws/aws-sdk-php-laravel": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
