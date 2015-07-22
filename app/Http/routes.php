@@ -18,3 +18,9 @@ Route::get('/', function () {
 Route::resource('articles', 'ArticlesController');
 Route::resource('authors', 'AuthorsController');
 Route::resource('articles.recommendations', 'RecommendationsController', ['only' => ['create', 'store']]);
+
+Route::post('queue/receive', function () {
+    $requestData = array_merge(Request::header(), Request::all());
+    Log::notice($requestData);
+    return $requestData;
+});
