@@ -21,6 +21,6 @@ Route::resource('articles.recommendations', 'RecommendationsController', ['only'
 
 Route::post('queue/receive', function () {
     Log::notice('[SQS-JOB] [request-header]', Request::header());
-    Log::notice('[SQS-JOB] [request-body]', Request::header());
+    Log::notice('[SQS-JOB] [request-body]', Request::all());
     return 'SQS-JOB';
 });
