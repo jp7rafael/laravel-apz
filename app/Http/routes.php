@@ -21,6 +21,6 @@ Route::resource('articles.recommendations', 'RecommendationsController', ['only'
 
 Route::post('queue/receive', function () {
     $requestData = array_merge(Request::header(), Request::all());
-    Log::notice($requestData);
+    Log::notice('[SQS-JOB]', $requestData);
     return $requestData;
 });

@@ -1,7 +1,7 @@
 /vendor
 /node_modules
 Homestead.yaml
-.env
+.env*
 /storage/*.sqlite
 /bower_components
 /public/js/*
