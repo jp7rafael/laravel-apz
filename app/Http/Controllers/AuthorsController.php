@@ -106,11 +106,16 @@ class AuthorsController extends Controller
      */
     public function destroy(Author $author)
     {
-        $deleted = $author->delete();
-        session()->flash('flash_message', 'Author was removed with success');
+        $deleted = false;
+        if ($author->hasArticles()) {
+            $deleted = $author->delete();
+            session()->flash('flash_message', 'Author was removed with success');
+        } else {
+            session()->flash('flash_message', 'You can not remove author with articles');
+        }
 
         if (Request::wantsJson()) {
-            return (string) $deleted;
+            return json_encode($deleted);
         } else {
             return redirect('authors');
         }
