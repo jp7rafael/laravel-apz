@@ -20,7 +20,7 @@ Route::resource('authors', 'AuthorsController');
 Route::resource('articles.recommendations', 'RecommendationsController', ['only' => ['create', 'store']]);
 
 Route::post('queue/receive', function () {
-    $requestData = array_merge(Request::header(), Request::all());
-    Log::notice('[SQS-JOB]', $requestData);
-    return $requestData;
+    Log::notice('[SQS-JOB] [request-header]', Request::header());
+    Log::notice('[SQS-JOB] [request-body]', Request::header());
+    return 'SQS-JOB';
 });
