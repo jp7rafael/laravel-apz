@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Queue\Jobs\SqsJob;
+use App\Queue\PushedSqsQueue;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +22,7 @@ Route::resource('authors', 'AuthorsController');
 Route::resource('articles.recommendations', 'RecommendationsController', ['only' => ['create', 'store']]);
 
 Route::post('queue/receive', function () {
-    $queue = Queue::connection();
-    $jobData = ['Body' => json_encode(Request::all())];
-    Log::notice('[SQS-JOB] [request-header]', $jobData);
-
-    try {
-        $job = new SqsJob(App::getFacadeRoot(), $queue->getSqs(), $queue, $jobData);
-        $job->fire();
-    } catch (Exception $e) {
-        //The Receipt Handle is used to delete the message and we are not taking care of it.
-        if ($e->getMessage() != 'Undefined index: ReceiptHandle') {
-            Log::error('[SQS-JOB] Error: ' . $e->getMessage());
-            return response($e->getMessage(), 500);
-        }
-    }
-    return 'OK';
+    return (new PushedSqsQueue)->marshal();
 });
 
 Route::get('/time', function () {
