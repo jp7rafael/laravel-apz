@@ -24,7 +24,3 @@ Route::resource('articles.recommendations', 'RecommendationsController', ['only'
 Route::post('queue/receive', function () {
     return (new PushedSqsQueue)->marshal();
 });
-
-Route::get('/time', function () {
-    return Queue::push(App\Jobs\FileTimeWriter::class, ['time' => time()]);
-});
