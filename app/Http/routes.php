@@ -29,13 +29,14 @@ Route::post('queue/receive', function () {
     try {
         $job = new SqsJob(App::getFacadeRoot(), $queue->getSqs(), $queue, $jobData);
         $job->fire();
-        return 'OK';
     } catch (Exception $e) {
-        Log::error('[SQS-JOB] Error: ' . $e->getMessage());
-
-        return response($e->getMessage(), 500);
+        //The Receipt Handle is used to delete the message and we are not taking care of it.
+        if ($e->getMessage() != 'Undefined index: ReceiptHandle') {
+            Log::error('[SQS-JOB] Error: ' . $e->getMessage());
+            return response($e->getMessage(), 500);
+        }
     }
-    
+    return 'OK';
 });
 
 Route::get('/time', function () {
