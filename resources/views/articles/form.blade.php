@@ -8,6 +8,10 @@
     {!! Form::textArea('content', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
+    {!! Form::label('image', 'Image:') !!}
+    {!! Form::file('image') !!}
+</div>
+<div class="form-group">
     {!! Form::label('author_id', 'Author:') !!}
     {!! Form::select('author_id', $authors, $article->author_id, ['class' => 'form-control']) !!}
 </div>

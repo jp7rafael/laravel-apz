@@ -7,6 +7,8 @@ use App\Http\Requests\ArticleRequest;
 use App\Http\Controllers\Controller;
 use App\Article;
 use App\Author;
+use File;
+use Storage;
 
 class ArticlesController extends Controller
 {
@@ -47,6 +49,7 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        $request['image_name'] = $this->saveImage($request);
         $article = Article::create($request->all());
         session()->flash('flash_message', 'Article was stored with success');
 
@@ -68,7 +71,7 @@ class ArticlesController extends Controller
         if (Request::wantsJson()) {
             return $article;
         } else {
-            return view('articles.show', compact('article'));
+            return view('articles.show', compact('article', 'imagePath'));
         }
     }
 
@@ -94,9 +97,10 @@ class ArticlesController extends Controller
      */
     public function update(ArticleRequest $request, Article $article)
     {
+        $request['image_name'] = $this->saveImage($request);
         $article->update($request->all());
         session()->flash('flash_message', 'Article was updated with success');
-
+        
         if (Request::wantsJson()) {
             return $article;
         } else {
@@ -119,6 +123,16 @@ class ArticlesController extends Controller
             return (string) $deleted;
         } else {
             return redirect('articles');
+        }
+    }
+
+    private function saveImage(ArticleRequest $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = $image->getFilename() . '.' . $image->getClientOriginalExtension();
+            Storage::put('uploads/' . $image_name, File::get($image), 'public');
+            return $image_name;
         }
     }
 }

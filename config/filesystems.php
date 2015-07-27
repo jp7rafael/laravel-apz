@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => env('STORAGE_CONNECTION', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
+            'root'   => public_path('uploads'),
         ],
 
         'ftp' => [
@@ -63,11 +63,11 @@ return [
         ],
 
         's3' => [
-            'driver' => 's3',
-            'key'    => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
+            'driver' => env('S3_DRIVER', 's3'),
+            'key'    => env('S3_KEY', 'your-key'),
+            'secret' => env('S3_SECRET', 'your-secret'),
+            'region' => env('S3_REGION', 'your-region'),
+            'bucket' => env('S3_BUCKET', 'your-bucket'),
         ],
 
         'rackspace' => [
