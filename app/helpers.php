@@ -1,7 +1,6 @@
 <?php
 
-
-function s3Url($file_name)
+function uploads($file)
 {
-    return env('S3_URL') . 'uploads/' . $file_name;
+    return config('uploads.url') . $file;
 }

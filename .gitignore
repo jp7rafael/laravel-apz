@@ -6,6 +6,7 @@ Homestead.yaml
 /bower_components
 /public/js/*
 /public/css/
+/public/uploads/
 dump.rdb
 .env.testing
 
